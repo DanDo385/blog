@@ -1,28 +1,40 @@
 // pages/posts/[slug].tsx
+import { useState, useEffect, useCallback } from 'react'; // Added useCallback import
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkHtml from 'remark-html';
 import { useRouter } from 'next/router';
-import PostDetail from '@components/PostDetail';
-import CommentForm from '@components/CommentForm';
-import CommentList from '@components/CommentList';
+import PostDetail from '../../components/PostDetail';
+import CommentForm from '../../components/CommentForm'; // Component for submitting comments
+import CommentList from '../../components/CommentList'; // Component for listing comments
 
 const postsDirectory = path.join(process.cwd(), '_posts');
 
-export default function PostPage({ postData, comments }) {
+export default function PostPage({ postData }) {
+  const [comments, setComments] = useState([]);
   const router = useRouter();
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
+
+  const fetchComments = useCallback(async () => {
+    if (!router.isFallback) {
+      const res = await fetch(`/api/comments?slug=${postData.slug}`);
+      const data = await res.json();
+      setComments(data.comments || []);
+    }
+  }, [postData.slug, router.isFallback]);
+  
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
+
+  // No need for FetchComment or PostComment if CommentForm and CommentList are being used
 
   return (
-    <article className="prose lg:prose-xl m-auto">
-      <h1>{postData.title}</h1>
-      <p>{postData.date}</p>
-      <PostDetail contentHtml={postData.contentHtml} />
-      <CommentForm slug={postData.slug} />
+    <article className="prose lg:prose-xl mx-auto">
+      <PostDetail post={postData} />
+      <CommentForm slug={postData.slug} onCommentSubmitted={fetchComments} />
       <CommentList comments={comments} />
     </article>
   );
@@ -30,34 +42,36 @@ export default function PostPage({ postData, comments }) {
 
 export async function getStaticPaths() {
   const filenames = fs.readdirSync(postsDirectory);
-  const paths = filenames.map((filename) => {
-    return {
-      params: {
-        slug: filename.replace(/\.md$/, ''),
-      },
-    };
-  });
+  const paths = filenames.map((filename) => ({
+    params: { slug: filename.replace(/\.md$/, '') },
+  }));
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 
 export async function getStaticProps({ params }) {
-  const fullPath = path.join(postsDirectory, `${params.slug}.md`);
+  const slug = params.slug.toString();
+  const fullPath = path.join(postsDirectory, `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
-  const processedContent = await remark().use(html).process(matterResult.content);
+
+  const processedContent = await unified()
+    .use(remarkParse)
+    .use(remarkHtml)
+    .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
   return {
     props: {
       postData: {
-        slug: params.slug,
+        slug,
         contentHtml,
         ...matterResult.data,
       },
     },
   };
 }
+

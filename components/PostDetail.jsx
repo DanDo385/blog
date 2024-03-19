@@ -1,5 +1,5 @@
 // components/PostDetail.jsx
-export default function PostDetail({ post }) {
+function PostDetail({ post }) {
   return (
     <article>
       <h2>{post.title}</h2>
@@ -8,3 +8,5 @@ export default function PostDetail({ post }) {
     </article>
   );
 }
+
+export default PostDetail;

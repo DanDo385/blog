@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>C2DeFi Zone</title>
+        <title>C2DeFi</title>
       </Head>
       <Component {...pageProps} />
     </>
