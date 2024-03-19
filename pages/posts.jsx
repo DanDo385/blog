@@ -1,27 +1,13 @@
 // pages/posts/index.js
-import { MongoClient } from 'mongodb';
 import PostList from '@components/PostList';
+import getPosts from '@utils/getPosts';
 
 export async function getStaticProps() {
-  // Connect to the database
-  const client = await MongoClient.connect(process.env.MONGODB_URI);
-  const db = client.db();
-
-  // Fetch the posts from the database
-  const posts = await db.collection('posts').find({}).toArray();
-
-  // Close the database connection
-  client.close();
-
+  const allPostsData = getPosts();
   return {
     props: {
-      // Convert _id (ObjectId) to string to avoid serialization error
-      posts: posts.map((post) => ({
-        ...post,
-        _id: post._id.toString(),
-      })),
+      posts: allPostsData,
     },
-    revalidate: 10, // In seconds
   };
 }
 
