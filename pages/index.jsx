@@ -1,0 +1,33 @@
+import Link from 'next/link';
+import Image from 'next/image';
+
+export default function Home() {
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">C2DeFi Zone</h1>
+      <p className="mb-4">
+        Welcome to our dedicated space where we explore the intriguing world of blockchain and cryptocurrencies. 
+        Through our posts, we aim to provide insightful analysis, latest updates, and thoughtful commentary on the developments 
+        in the blockchain ecosystem and the ever-evolving cryptocurrency markets.
+      </p>
+      <p className="mb-4">
+        Whether you are a blockchain enthusiast, a crypto investor, or simply curious about the technology that is set to 
+        transform industries, our blog is here to equip you with the knowledge you need to navigate the crypto space.
+      </p>
+      <Link href="/posts">
+        <span className="inline-blockpy-2 px-4 rounded">
+          Explore Posts
+        </span>
+      </Link>
+      <div className="mt-8">
+        <Image 
+          src="/blog-pic.jpg" 
+          alt="Blockchain and Cryptocurrencies" 
+          width={600} 
+          height={400} 
+          objectFit="cover" // Adjust as needed
+        />
+      </div>
+    </div>
+  );
+}
