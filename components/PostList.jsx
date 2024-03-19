@@ -7,7 +7,7 @@ function PostList({ posts }) {
       {posts.map((post) => (
         <li key={post.slug}>
           <Link href={`/posts/${post.slug}`}>
-            <a>{post.title}</a>
+            <span>{post.title}</span>
           </Link>
         </li>
       ))}

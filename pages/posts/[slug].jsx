@@ -1,3 +1,4 @@
+// pages/posts/[slug].jsx
 import { useRouter } from 'next/router';
 import PostDetail from '../../components/PostDetail';
 import CommentForm from '../../components/CommentForm';
@@ -29,4 +30,3 @@ export default function PostPage() {
   );
 }
 
-// Implement getStaticPaths and getStaticProps for fetching post data and generating static pages.

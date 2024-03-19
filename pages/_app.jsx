@@ -1,9 +1,7 @@
-// pages/_app.js or pages/_app.tsx
+// pages/_app.js 
 import Head from 'next/head';
-import '@/styles/globals.css';
+import '../styles/globals.css';
 
-
-const poppins = Poppins({ subsets: ['latin'], weight: ['500', '700'] })
 function MyApp({ Component, pageProps }) {
   return (
     <>
