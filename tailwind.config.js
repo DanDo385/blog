@@ -1,27 +1,20 @@
-// tailwind.config.js
 module.exports = {
   theme: {
     extend: {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
       },
-      colors: {
-        slate: {
-          900: '#2d3748',
-        },
-        green: {
-          400: '#48bb78',
-        },
-      },
       fontWeight: {
-        normal: 500,
+        normal: 500, // Sets the default font weight to 500
+      },
+      backgroundColor: {
+        default: '#1E293B', // Default bg color bg-slate-900
+      },
+      textColor: {
+        default: '#34D399', // Default text color text-green-400
+        hover: '#059669', // Custom property for hover state text-green-600
       },
     },
   },
-  variants: {
-    extend: {
-      textColor: ['hover'],
-    },
-  },
-  plugins: [require('@tailwindcss/forms')],
-};
+  plugins: [],
+}
