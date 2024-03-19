@@ -1,5 +1,5 @@
 // utils/markdownToHtml.js
-const remark = require('remark');
+const { remark } = require('remark');
 const html = require('remark-html');
 
 async function markdownToHtml(markdown) {

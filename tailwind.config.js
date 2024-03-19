@@ -1,11 +1,13 @@
+// tailwind.config.js
 module.exports = {
+  // ... other configurations
   theme: {
     extend: {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
       },
       fontWeight: {
-        normal: 500, // Sets the default font weight to 500
+        normal: '500', // Ensure that the value is a string
       },
       backgroundColor: {
         default: '#1E293B', // Default bg color bg-slate-900
@@ -17,4 +19,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
