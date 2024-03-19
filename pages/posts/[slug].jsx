@@ -1,26 +1,20 @@
 // pages/posts/[slug].jsx
-import { useState, useEffect, useCallback } from "react";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkHtml from "remark-html";
-import { useRouter } from "next/router";
-import { signIn, signOut } from "next-auth/react"; // Import signIn and signOut directly
-import { useUser } from "../../lib/auth"; // Import useUser hook
+import { useState, useEffect, useCallback } from 'react';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkHtml from 'remark-html';
+import { useRouter } from 'next/router';
+import CommentForm from '../../components/CommentForm';
+import CommentList from '../../components/CommentList';
 
-import PostDetail from "../../components/PostDetail";
-import CommentForm from "../../components/CommentForm";
-import CommentList from "../../components/CommentList";
-import PostComment from "../../components/PostComment";
-
-const postsDirectory = path.join(process.cwd(), "_posts");
+const postsDirectory = path.join(process.cwd(), '_posts');
 
 export default function PostPage({ postData }) {
   const [comments, setComments] = useState([]);
   const router = useRouter();
-  const { session, loading, signIn, signOut } = useUser(); // Destructure signIn and signOut
 
   const fetchComments = useCallback(async () => {
     if (!router.isFallback && postData.slug) {
@@ -34,31 +28,32 @@ export default function PostPage({ postData }) {
     fetchComments();
   }, [fetchComments]);
 
-  if (loading || router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
-  if (session) {
-    return (
-      <article className="prose lg:prose-xl mx-auto">
-        Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-
-        <CommentList comments={comments} />
-        <PostComment slug={postData.slug} onCommentSubmitted={fetchComments} />
-        <PostDetail post={postData} />
-        <CommentForm slug={postData.slug} onCommentSubmitted={fetchComments} />
-      </article>
-    );
-  }
+  const handleCommentSubmit = async ({ name, comment }) => {
+    try {
+      // Send comment data to backend
+      await fetch('/api/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ slug: postData.slug, name, comment }),
+      });
+      // Fetch comments again to update the list
+      fetchComments();
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
+  };
 
   return (
-    <div>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+    <div className="prose lg:prose-xl mx-auto">
+      <CommentList comments={comments} />
+      <CommentForm onSubmit={handleCommentSubmit} />
+      {/* Display other post details */}
     </div>
   );
 }
+
 
 export async function getStaticPaths() {
   const filenames = fs.readdirSync(postsDirectory);

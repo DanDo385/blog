@@ -1,51 +1,44 @@
-// components/CommentForm.jsx
+// components/CommentForm.js
 import { useState } from 'react';
 
-function CommentForm({ slug, onCommentSubmitted }) {
+export default function CommentForm({ onSubmit }) {
+  const [name, setName] = useState('');
   const [comment, setComment] = useState('');
-  const [status, setStatus] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus('Submitting...');
-
-    try {
-      const response = await fetch('/api/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug, comment }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
-        const result = await response.json();
-        setStatus(result.message); // Or any success message you prefer
-        setComment(''); // Clear the textarea after successful submission
-        onCommentSubmitted(); // Refresh the comments list
-      }
-    } catch (error) {
-      console.error("Failed to submit comment", error);
-      setStatus('Failed to submit comment. Please try again.'); // Error message for the user
+    // Validate inputs
+    if (!name.trim() || !comment.trim()) {
+      alert('Please enter your name and comment.');
+      return;
     }
+    // Call onSubmit function with name and comment
+    onSubmit({ name, comment });
+    // Reset form fields
+    setName('');
+    setComment('');
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="comment">Comment:</label>
         <textarea
-          name="comment"
           id="comment"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder="Leave a comment..."
-          required
-        ></textarea>
-        <button type="submit">Submit Comment</button>
-      </form>
-      {status && <p>{status}</p>} {/* Display status message to the user */}
-    </div>
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
   );
 }
-
-export default CommentForm;
