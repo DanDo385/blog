@@ -10,10 +10,6 @@ export default function Home() {
         Through our posts, we aim to provide insightful analysis, latest updates, and thoughtful commentary on the developments 
         in the blockchain ecosystem and the ever-evolving cryptocurrency markets.
       </p>
-      <p className="mb-4">
-        Whether you are a blockchain enthusiast, a crypto investor, or simply curious about the technology that is set to 
-        transform industries, our blog is here to equip you with the knowledge you need to navigate the crypto space.
-      </p>
       <div className="text-center">
         <Link href="/posts">
           <span className="inline-block py-2 px-4 rounded">Explore Posts</span>
