@@ -14,7 +14,7 @@ export async function getStaticProps() {
 export default function PostsPage({ posts }) {
   return (
     <div className="bg-slate-900 text-green-400 min-h-screen">
-      <h1 className="text-4xl font-semibold p-5">Blog Posts</h1>
+      <h3 className="text-4xl font-semibold p-5">Blog Posts</h3>
       <div className="p-5">
         <PostList posts={posts} />
       </div>
