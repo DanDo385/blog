@@ -8,19 +8,23 @@ import remarkParse from 'remark-parse';
 import remarkHtml from 'remark-html';
 import { useRouter } from 'next/router';
 import CommentForm from '../../components/CommentForm';
-import CommentList from '../../components/CommentList';
+import CommentList from '../../components/CommentList'; // Ensure that CommentList is imported
 
 const postsDirectory = path.join(process.cwd(), '_posts');
 
 export default function PostPage({ postData }) {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]); // State to hold comments
   const router = useRouter();
 
   const fetchComments = useCallback(async () => {
     if (!router.isFallback && postData.slug) {
-      const res = await fetch(`/api/comments?slug=${postData.slug}`);
-      const data = await res.json();
-      setComments(data.comments || []);
+      try {
+        const res = await fetch(`/api/comments?slug=${postData.slug}`);
+        const data = await res.json();
+        setComments(data); // Update comments state with fetched comments
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
     }
   }, [postData.slug, router.isFallback]);
 
@@ -30,7 +34,6 @@ export default function PostPage({ postData }) {
 
   const handleCommentSubmit = async ({ name, comment }) => {
     try {
-      // Send comment data to backend
       await fetch('/api/comments', {
         method: 'POST',
         headers: {
@@ -38,39 +41,45 @@ export default function PostPage({ postData }) {
         },
         body: JSON.stringify({ slug: postData.slug, name, comment }),
       });
-      // Fetch comments again to update the list
-      fetchComments();
+      fetchComments(); // Refetch comments after submission
     } catch (error) {
       console.error('Error submitting comment:', error);
     }
   };
 
   return (
-    <div className="prose lg:prose-xl mx-auto">
-      <CommentList comments={comments} />
-      <CommentForm onSubmit={handleCommentSubmit} />
-      {/* Display other post details */}
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold mb-4">{postData.title}</h1>
+        <div
+          className="prose lg:prose-xl"
+          dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
+        />
+        <hr className="my-8" />
+        <h2 className="text-xl font-bold mb-4">Comments</h2>
+        <CommentList comments={comments} /> {/* Render CommentList component */}
+        <CommentForm onSubmit={handleCommentSubmit} /> {/* Pass onSubmit handler to CommentForm */}
+      </div>
     </div>
   );
 }
 
-
 export async function getStaticPaths() {
   const filenames = fs.readdirSync(postsDirectory);
   const paths = filenames.map((filename) => ({
-    params: { slug: filename.replace(/\.md$/, "") },
+    params: { slug: filename.replace(/\.md$/, '') },
   }));
 
   return {
     paths,
-    fallback: "blocking",
+    fallback: false,
   };
 }
 
 export async function getStaticProps({ params }) {
   const slug = params.slug.toString();
   const fullPath = path.join(postsDirectory, `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
   const processedContent = await unified()
@@ -83,8 +92,8 @@ export async function getStaticProps({ params }) {
     props: {
       postData: {
         slug,
+        title: matterResult.data.title,
         contentHtml,
-        ...matterResult.data,
       },
     },
   };

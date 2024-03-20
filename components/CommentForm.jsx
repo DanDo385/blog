@@ -1,4 +1,4 @@
-// components/CommentForm.js
+// components/CommentForm.jsx
 import { useState } from 'react';
 
 export default function CommentForm({ onSubmit }) {
@@ -7,14 +7,13 @@ export default function CommentForm({ onSubmit }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validate inputs
+
     if (!name.trim() || !comment.trim()) {
       alert('Please enter your name and comment.');
       return;
     }
-    // Call onSubmit function with name and comment
-    onSubmit({ name, comment });
-    // Reset form fields
+
+    await onSubmit({ name, comment });
     setName('');
     setComment('');
   };

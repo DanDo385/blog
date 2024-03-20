@@ -7,23 +7,18 @@ export default async function handler(req, res) {
   const commentsCollection = db.collection('comments');
 
   if (req.method === 'POST') {
-    const { slug, comment } = req.body;
-    try {
-      await commentsCollection.insertOne({ slug, comment, createdAt: new Date() });
-      res.status(201).json({ message: 'Comment added successfully' });
-    } catch (error) {
-      console.error('Error saving comment:', error);
-      res.status(500).json({ error: 'Error saving comment' });
-    }
+    const { slug, name, comment } = req.body;
+    await commentsCollection.insertOne({
+      slug,
+      name,
+      comment,
+      createdAt: new Date()
+    });
+    res.status(201).json({ message: 'Comment added successfully' });
   } else if (req.method === 'GET') {
     const { slug } = req.query;
-    try {
-      const comments = await commentsCollection.find({ slug }).toArray();
-      res.status(200).json(comments);
-    } catch (error) {
-      console.error('Error fetching comments:', error);
-      res.status(500).json({ error: 'Error fetching comments' });
-    }
+    const comments = await commentsCollection.find({ slug }).toArray();
+    res.status(200).json(comments);
   } else {
     res.setHeader('Allow', ['GET', 'POST']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
