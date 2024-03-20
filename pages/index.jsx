@@ -6,9 +6,7 @@ export default function Home() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-center text-3xl font-bold mb-4">C2DeFi Zone</h1>
       <p className="mb-4">
-        Welcome to our dedicated space where we explore the intriguing world of blockchain and cryptocurrencies. 
-        Through our posts, we aim to provide insightful analysis, latest updates, and thoughtful commentary on the developments 
-        in the blockchain ecosystem and the ever-evolving cryptocurrency markets.
+      Welcome to C2DeFI! I'm Dan, with thirteen years in traditional finance and now on a journey into blockchain development. This blog is my platform to share insights, guide newcomers to blockchain, compare traditional and decentralized finance, and discuss the latest in web development and crypto trends. Join me in exploring the evolving landscape of finance and technology.
       </p>
       <div className="text-center">
         <Link href="/posts">
