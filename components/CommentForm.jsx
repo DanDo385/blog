@@ -37,7 +37,12 @@ export default function CommentForm({ onSubmit }) {
           onChange={(e) => setComment(e.target.value)}
         />
       </div>
-      <button type="submit">Submit</button>
+      <button
+        type="submit"
+        className="bg-green-400 text-slate-900 rounded-lg p-2"
+        style={{ borderRadius: '.75rem' }}
+        >Submit
+      </button>
     </form>
   );
 }
