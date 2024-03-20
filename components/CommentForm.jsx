@@ -26,7 +26,7 @@ export default function CommentForm({ onSubmit }) {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md text-green-400"
+          className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md text-slate-900"
         />
       </div>
       <div className="mb-4">
@@ -35,7 +35,7 @@ export default function CommentForm({ onSubmit }) {
           id="comment"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md text-green-400"
+          className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md text-slate-900"
         />
       </div>
       <button
