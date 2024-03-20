@@ -8,15 +8,14 @@ As I wrap up this project, my next goal is to complete my Solidity projects and 
 
 This experience taught me several valuable lessons:
 
-Embracing projects slightly beyond my current skills was a powerful way to learn and grow.
+1. Embracing projects slightly beyond my current skills was a powerful way to learn and grow.
 
-A well-crafted portfolio website can truly differentiate you in a job market saturated with traditional resumes.
-The advancements in AI are so profound that they can simplify even complex development tasks, making certain libraries feel almost redundant. Interestingly, the initial 10% of the website's development consumed half of the time, but once over that hurdle, the momentum carried the remaining 90% at the same pace.
+2. A well-crafted portfolio website can truly differentiate you in a job market saturated with traditional resumes.
 
-For those new to web development, diving into next.js can significantly clean up and enhance your code, especially with features like routing, server-side rendering, and new tags like Head, Link, and Image.
+3. The advancements in AI are so profound that they can simplify even complex development tasks, making certain libraries feel almost redundant. Interestingly, the initial 10% of the website's development consumed half of the time, but once over that hurdle, the momentum carried the remaining 90% at the same pace.
 
-When working with AI tools, remember they tend to default to generating React code. Keeping a reminder to use next.js and tailwindcss can help steer the AI in the right direction.
+4. For those new to web development, diving into Next.js can significantly clean up and enhance your code, especially with features like routing, server-side rendering, and new tags like Head, Link, and Image.
 
-Despite the occasional frustrations of coding, the tools and resources available today, especially with AI, make it an exciting time to learn and enter the field.
+5. When working with AI tools, remember they tend to default to generating React code. Keeping a reminder to use next.js and tailwindcss can help steer the AI in the right direction. Despite the occasional frustrations of coding, the tools and resources available today, especially with AI, make it an exciting time to learn and enter the field.
 
 This journey has been a testament to the power of stepping out of your comfort zone and the endless possibilities that technology and a willingness to learn can unlock. I look forward to sharing more of my journey and the projects I've been working on with you. Stay tuned for the link to my portfolio website, and let's embrace the exciting, sometimes daunting, world of web development together.

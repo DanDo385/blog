@@ -50,15 +50,15 @@ export default function PostPage({ postData }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4">{postData.title}</h1>
+        <h1 className="text-xl font-bold mb-4">{postData.title}</h1>
         <div
           className="prose lg:prose-xl"
           dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
         />
         <hr className="my-8" />
-        <h2 className="text-xl font-bold mb-4">Comments</h2>
-        <CommentList comments={comments} /> {/* Render CommentList component */}
-        <CommentForm onSubmit={handleCommentSubmit} /> {/* Pass onSubmit handler to CommentForm */}
+        
+        <CommentList comments={comments} /> 
+        <CommentForm onSubmit={handleCommentSubmit} /> 
       </div>
     </div>
   );

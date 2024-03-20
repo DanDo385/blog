@@ -20,22 +20,22 @@ export default function CommentForm({ onSubmit }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
+        <label htmlFor="name" className="block text-sm font-medium text-green-400">Name:</label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md text-slate-900"
+          className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-green-400 rounded-md text-slate-900"
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="comment" className="block text-sm font-medium text-gray-700">Comment:</label>
+        <label htmlFor="comment" className="block text-sm font-medium text-green-400">Comment:</label>
         <textarea
           id="comment"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md text-slate-900"
+          className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-green-400 rounded-md text-slate-900"
         />
       </div>
       <button
