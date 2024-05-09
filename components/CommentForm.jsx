@@ -1,4 +1,4 @@
-//components.CommentForm.jsx
+// components/CommentForm.jsx
 import { useState } from 'react';
 
 export default function CommentForm({ onSubmit }) {
@@ -7,6 +7,7 @@ export default function CommentForm({ onSubmit }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Attempting to submit comment:', { name, comment });
 
     if (!name.trim() || !comment.trim()) {
       alert('Please enter your name and comment.');
@@ -14,6 +15,7 @@ export default function CommentForm({ onSubmit }) {
     }
 
     await onSubmit({ name, comment });
+    console.log('Comment submitted and form cleared');
     setName('');
     setComment('');
   };
@@ -26,7 +28,10 @@ export default function CommentForm({ onSubmit }) {
           type="text"
           id="name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            console.log('Name changed:', e.target.value);
+            setName(e.target.value);
+          }}
           className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-green-400 rounded-md text-slate-900"
         />
       </div>
@@ -35,7 +40,10 @@ export default function CommentForm({ onSubmit }) {
         <textarea
           id="comment"
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => {
+            console.log('Comment changed:', e.target.value);
+            setComment(e.target.value);
+          }}
           className="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-green-400 rounded-md text-slate-900"
         />
       </div>
