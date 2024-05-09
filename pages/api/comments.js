@@ -10,8 +10,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
       const { slug, name, comment } = req.body;
       if (!slug || !name.trim() || !comment.trim()) {
-        res.status(400).json({ message: 'Missing required fields' });
-        return;
+        return res.status(400).json({ message: 'Missing required fields' });
       }
       const response = await commentsCollection.insertOne({
         slug,
@@ -24,8 +23,7 @@ export default async function handler(req, res) {
     } else if (req.method === 'GET') {
       const { slug } = req.query;
       if (!slug) {
-        res.status(400).json({ message: 'Slug is required' });
-        return;
+        return res.status(400).json({ message: 'Slug is required' });
       }
       const comments = await commentsCollection.find({ slug }).sort({ createdAt: -1 }).toArray();
       res.status(200).json(comments);
@@ -35,6 +33,6 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.error('Database operation failed', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 }
