@@ -1,5 +1,4 @@
 // pages/api/comments.js
-// pages/api/comments.js
 import clientPromise from '../../utils/mongodb';
 
 export default async function handler(req, res) {
@@ -7,21 +6,35 @@ export default async function handler(req, res) {
   const db = client.db('yourDatabaseName');
   const commentsCollection = db.collection('comments');
 
-  if (req.method === 'POST') {
-    const { slug, name, comment } = req.body;
-    await commentsCollection.insertOne({
-      slug,
-      name,
-      comment,
-      createdAt: new Date()
-    });
-    res.status(201).json({ message: 'Comment added successfully' });
-  } else if (req.method === 'GET') {
-    const { slug } = req.query;
-    const comments = await commentsCollection.find({ slug }).toArray();
-    res.status(200).json(comments);
-  } else {
-    res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+  try {
+    if (req.method === 'POST') {
+      const { slug, name, comment } = req.body;
+      if (!slug || !name.trim() || !comment.trim()) {
+        res.status(400).json({ message: 'Missing required fields' });
+        return;
+      }
+      const response = await commentsCollection.insertOne({
+        slug,
+        name,
+        comment,
+        createdAt: new Date()
+      });
+      const newComment = response.ops[0];
+      res.status(201).json(newComment);
+    } else if (req.method === 'GET') {
+      const { slug } = req.query;
+      if (!slug) {
+        res.status(400).json({ message: 'Slug is required' });
+        return;
+      }
+      const comments = await commentsCollection.find({ slug }).sort({ createdAt: -1 }).toArray();
+      res.status(200).json(comments);
+    } else {
+      res.setHeader('Allow', ['GET', 'POST']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+  } catch (error) {
+    console.error('Database operation failed', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 }

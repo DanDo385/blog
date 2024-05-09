@@ -8,20 +8,22 @@ import remarkParse from 'remark-parse';
 import remarkHtml from 'remark-html';
 import { useRouter } from 'next/router';
 import CommentForm from '../../components/CommentForm';
-import CommentList from '../../components/CommentList'; // Ensure that CommentList is imported
+import CommentList from '../../components/CommentList';
 
 const postsDirectory = path.join(process.cwd(), '_posts');
 
 export default function PostPage({ postData }) {
-  const [comments, setComments] = useState([]); // State to hold comments
+  const [comments, setComments] = useState([]);
   const router = useRouter();
 
   const fetchComments = useCallback(async () => {
     if (!router.isFallback && postData.slug) {
+      console.log('Fetching comments for slug:', postData.slug); // Log slug being fetched
       try {
         const res = await fetch(`/api/comments?slug=${postData.slug}`);
         const data = await res.json();
-        setComments(data); // Update comments state with fetched comments
+        console.log('Comments fetched:', data); // Log fetched data
+        setComments(data);
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
@@ -33,14 +35,17 @@ export default function PostPage({ postData }) {
   }, [fetchComments]);
 
   const handleCommentSubmit = async ({ name, comment }) => {
+    console.log('Submitting comment:', { name, comment }); // Log data being submitted
     try {
-      await fetch('/api/comments', {
+      const res = await fetch('/api/comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ slug: postData.slug, name, comment }),
       });
+      const newComment = await res.json();
+      console.log('Response after submitting:', newComment); // Log response from the server
       fetchComments(); // Refetch comments after submission
     } catch (error) {
       console.error('Error submitting comment:', error);
@@ -56,9 +61,9 @@ export default function PostPage({ postData }) {
           dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
         />
         <hr className="my-8" />
-        
-        <CommentList comments={comments} /> 
-        <CommentForm onSubmit={handleCommentSubmit} /> 
+
+        <CommentList comments={comments} />
+        <CommentForm onSubmit={handleCommentSubmit} />
       </div>
     </div>
   );
