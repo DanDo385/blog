@@ -1,6 +1,6 @@
 ---
 title: "The Cost of Moving Currencies Abroad"
-date: "2024-02-28"
+date: "2024-05-08"
 ---
 Drawing from my experience as an execution trader at a prominent hedge fund, I observed firsthand the dynamics of forex spreads. For major currency pairs like USD/JPY, spreads were impressively tight, often less than a pip. To put this into perspective, a one-pip spread, say between USD/JPY at 150.00 and 150.01, translates to a mere 0.007% difference. However, as we venture into more exotic territories—like the Russian Ruble (USD/RUB), Polish Złoty (USD/PLN), and Mexican Peso (USD/MXN)—the spreads widen significantly, ranging from 0.5% to 0.9%. This uptick is primarily due to the inherent risks and lower liquidity of these currencies.
 

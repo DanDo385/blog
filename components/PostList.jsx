@@ -1,3 +1,4 @@
+// components/PostList.jsx
 import Link from 'next/link';
 
 function formatDate(dateString) {

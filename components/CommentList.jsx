@@ -1,4 +1,4 @@
-// components/CommentList.js
+// components/CommentList.jsx
 export default function CommentList({ comments }) {
   // Function to format date
   const formatDate = (dateString) => {
