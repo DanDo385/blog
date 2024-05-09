@@ -10,7 +10,7 @@ html, body, input, textarea, button {
 }
 
 body {
-  background-color: #1E293B; /* bg-slate-900 */
+  background-color: black; /* bg-slate-900 */
   color: #34D399; /* text-green-400 */
 }
 
