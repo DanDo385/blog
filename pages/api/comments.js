@@ -1,4 +1,5 @@
 // pages/api/comments.js
+// pages/api/comments.js
 import clientPromise from '../../utils/mongodb';
 
 export default async function handler(req, res) {
